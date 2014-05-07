@@ -4,7 +4,6 @@ var Primes = (function() {
 
 	function init() {
 		primes = [2, 3];
-		squares = [4, 9];
 		maxPrime = 3;
 		calculatedTo = 3;
 	}
@@ -19,6 +18,7 @@ var Primes = (function() {
 			return false;
 		}
 		// else
+		var prime;
 		while (prime = calculateNext(max)) {
 			if (n % prime == 0) {
 				return false;
