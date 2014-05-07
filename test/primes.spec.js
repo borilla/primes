@@ -1,78 +1,37 @@
 (function() {
-	module('Handlers');
-
-	var obj, method, handler1, handler2;
+	module('Primes');
 
 	QUnit.testStart(function() {
-		var callOrder = 0;
-		method = function() {
-			method.callCount += 1;
-			method.callOrder = callOrder++;
-			return 'result';
-		};
-		method.callCount = 0;
-		obj = {
-			method: method
-		};
-		handler1 = function() {
-			handler1.callCount += 1;
-			handler1.callOrder = callOrder++;
-		};
-		handler1.callCount = 0;
-		handler2 = function() {
-			handler2.callCount += 1;
-			handler2.callOrder = callOrder++;
-		};
-		handler2.callCount = 0;
 	});
 
-	test('should have a before function', function() {
-		equal(typeof Handlers.before, 'function');
+	QUnit.testDone(function() {
+		Primes.reset();
 	});
 
-	test('should have an after function', function() {
-		equal(typeof Handlers.after, 'function');
+	test('should return true for prime numbers', function() {
+		equal(Primes.isPrime(2), true, '2 is a prime number');
+		equal(Primes.isPrime(3), true, '3 is a prime number');
+		equal(Primes.isPrime(104729), true, '104729 is a prime number');
+		equal(Primes.isPrime(5), true, '5 is a prime number');
+		equal(Primes.isPrime(7), true, '7 is a prime number');
+		equal(Primes.isPrime(11), true, '11 is a prime number');
+		equal(Primes.isPrime(9967), true, '9967 is a prime number');
 	});
 
-	test('should fire "before" handlers before method is called', function() {
-		Handlers.before(obj, 'method', handler1);
-		Handlers.before(obj, 'method', handler2);
-		obj.method();
-		ok(method.callCount == 1, 'original method was called');
-		ok(handler1.callCount == 1, 'handler1 was called');
-		ok(handler2.callCount == 1, 'handler2 was called');
-		ok(handler1.callOrder < method.callOrder, 'handler1 was called before method');
-		ok(handler2.callOrder < method.callOrder, 'handler2 was called before method');
+	test('should return false for non-prime numbers', function() {
+		equal(Primes.isPrime(1), false, '1 is not a prime number');
+		equal(Primes.isPrime(4), false, '4 is not a prime number');
+		equal(Primes.isPrime(21), false, '21 is not a prime number');
+		equal(Primes.isPrime(100000000), false, '1000 is not a prime number');
+		equal(Primes.isPrime(104730), false, '104730 is not a prime number');
 	});
 
-	test('should fire "after" handlers after method is called', function() {
-		Handlers.after(obj, 'method', handler1);
-		Handlers.after(obj, 'method', handler2);
-		obj.method();
-		ok(method.callCount == 1, 'original method was called');
-		ok(handler1.callCount == 1, 'handler1 was called');
-		ok(handler2.callCount == 1, 'handler2 was called');
-		ok(handler1.callOrder > method.callOrder, 'handler1 was called after method');
-		ok(handler2.callOrder > method.callOrder, 'handler2 was called after method');
-	});
-
-	test('should add before, after and restore methods to function', function() {
-		Handlers.after(obj, 'method', handler1);
-		ok(typeof obj.method.before == 'function', 'added before method');
-		ok(typeof obj.method.after == 'function', 'added after method');
-		ok(typeof obj.method.restore == 'function', 'added restore method');
-	});
-
-	test('should be able to restore original method', function() {
-		var original = obj.method;
-		Handlers.before(obj, 'method', handler1);
-		Handlers.after(obj, 'method', handler2);
-		ok(obj.method !== original, 'method was modified when handlers were added');
-		obj.method.restore();
-		ok(obj.method === original, 'method was correctly restored');
-		obj.method();
-		ok(method.callCount == 1, 'original method was called');
-		ok(handler1.callCount == 0, 'handler1 was not called');
-		ok(handler2.callCount == 0, 'handler2 was not called');
+	test('should be able to return primes up to a value', function() {
+		deepEqual(Primes.getPrimesTo(1), [], 'Primes to 1');
+		deepEqual(Primes.getPrimesTo(2), [2], 'Primes to 2');
+		deepEqual(Primes.getPrimesTo(3), [2,3], 'Primes to 3');
+		deepEqual(Primes.getPrimesTo(10), [2,3,5,7], 'Primes to 10');
+		deepEqual(Primes.getPrimesTo(30), [2,3,5,7,11,13,17,19,23,29], 'Primes to 30');
+		equal(Primes.getPrimesTo(1000000).length, 78498, 'There are 78498 primes less than 1M');
 	});
 }());

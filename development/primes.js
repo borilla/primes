@@ -4,8 +4,9 @@ var Primes = (function() {
 
 	function init() {
 		primes = [2, 3];
-		calculatedTo = 3;
+		squares = [4, 9];
 		maxPrime = 3;
+		calculatedTo = 3;
 	}
 
 	function isPrime(n) {
@@ -13,9 +14,17 @@ var Primes = (function() {
 			return primesContains(n);
 		}
 		// else
-		var sqrt = Math.sqrt(n);
-		calculatePrimesTo(sqrt);
-		return !primesContainsFactorOf(n);
+		var max = Math.ceil(Math.sqrt(n));
+		if (primesContainsFactorOf(n, max)) {
+			return false;
+		}
+		// else
+		while (prime = calculateNext(max)) {
+			if (n % prime == 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	function primesContains(n) {
@@ -31,34 +40,37 @@ var Primes = (function() {
 		return false;
 	}
 
-	function primesContainsFactorOf(n, sqrt) {
-		sqrt = sqrt || Math.sqrt(n);
+	function primesContainsFactorOf(n, max) {
+		max = max || Math.ceil(Math.sqrt(n));
 		for (var i = 0, l = primes.length; i < l; ++i) {
 			var prime = primes[i];
 			if (n % prime == 0) {
 				return true;
 			}
-			if (prime > sqrt) {
+			if (prime > max) {
 				break;
 			}
 		}
 		return false;
 	}
 
-	function calculatePrimesTo(n) {
-		if (n > calculatedTo) {
-			var start = Date.now();
-			n = Math.ceil(n);
-			while (calculatedTo < n) {
-				calculatedTo += 2;
-				if (!primesContainsFactorOf(calculatedTo)) {
-					primes.push(calculatedTo);
-					maxPrime = calculatedTo;
+	function calculateNext(max) {
+		max = max || INT_MAX;
+		var n = calculatedTo;
+		if (n < max) {
+			while (n += 2 <= max) {
+				if (!primesContainsFactorOf(n)) {
+					primes.push(n);
+					return maxPrime = calculatedTo = n;
 				}
 			}
-			var t = Date.now() - start;
-			console.log('calculated primes to ' + n + ': ' + primes.length + ' primes (' + t + 'ms)');
+			calculatedTo = n - 2;
 		}
+		// return undefined;
+	}
+
+	function calculatePrimesTo(n) {
+		while (calculateNext(n));
 	}
 
 	function getPrimesTo(n) {
