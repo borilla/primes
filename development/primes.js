@@ -55,7 +55,7 @@ var Primes = (function() {
 	}
 
 	function calculateNext(max) {
-		max = max || INT_MAX;
+		max = max || Number.MAX_VALUE;
 		var n = calculatedTo;
 		if (n < max) {
 			while (n += 2 <= max) {
@@ -87,11 +87,91 @@ var Primes = (function() {
 		return primes.slice(0, primes.length);
 	}
 
+	function getPrimeFactorsOf(n, includeMultiples) {
+		var factors = [];
+		var remainder = n;
+		var prime;
+		var tryFactor = (includeMultiples) ? tryFactorMultiples : tryFactorUnique;
+
+		function tryFactorUnique(factor) {
+			if (remainder % factor == 0) {
+				factors.push(factor);
+				do {
+					remainder /= factor;
+					if (remainder == 1) {
+						return;
+					}
+				}
+				while (remainder % factor == 0);
+			}
+		}
+
+		function tryFactorMultiples(factor) {
+			if (remainder % factor == 0) {
+				var multiple = 1;
+				var multiples = [1];
+				do {
+					multiple *= factor;
+					multiples.push(multiple);
+					remainder /= factor;
+				}
+				while (remainder % factor == 0);
+				factors.push(multiples);
+			}
+		}
+
+		for (var i = 0, l = primes.length; i < l; ++i) {
+			tryFactor(primes[i]);
+			if (remainder == 1) {
+				return factors;
+			}
+		}
+		var max = n / maxPrime;
+		while (prime = calculateNext(max)) {
+			tryFactor(prime);
+			if (remainder == 1) {
+				return factors;
+			}
+		}
+		factors.push(includeMultiples ? [1,n] : n);
+		return factors;
+	}
+
+	function getFactorCombinations(primes) {
+		var powers = primes[0];
+		var factors = powers ? powers.slice() : [1];
+		if (primes.length > 1) {
+			var combinations = getFactorCombinations(primes.slice(1));
+			powers.forEach(function(power) {
+				combinations.forEach(function(x) {
+					if (x != 1) {
+						factors.push(x * power);
+					}
+				});
+			});
+		}
+		return factors;
+	}
+
+	function sortArray(arr) {
+		return arr.sort(function(a, b) {
+			return (a < b) ? -1 : (a == b) ? 0 : 1;
+		});
+	}
+
+	function getAllFactorsOf(n, sort) {
+		var primes = getPrimeFactorsOf(n, true);
+		var factors = getFactorCombinations(primes);
+		return (sort) ? sortArray(factors) : factors;
+	}
+
 	init();
 
 	return {
 		reset: init,
 		isPrime: isPrime,
-		getPrimesTo: getPrimesTo
+		getPrimesTo: getPrimesTo,
+		getPrimeFactorsOf: getPrimeFactorsOf,
+		getAllFactorsOf: getAllFactorsOf
 	};
 }());
