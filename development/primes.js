@@ -1,6 +1,8 @@
 var Primes = (function() {
 
 	var primes, calculatedTo, maxPrime;
+	var MathSqrt = Math.sqrt;
+	var MathCeil = Math.ceil;
 
 	function init() {
 		primes = [2, 3];
@@ -13,7 +15,7 @@ var Primes = (function() {
 			return primesContains(n);
 		}
 		// else
-		var max = Math.ceil(Math.sqrt(n));
+		var max = MathCeil(MathSqrt(n));
 		if (primesContainsFactorOf(n, max)) {
 			return false;
 		}
@@ -41,7 +43,7 @@ var Primes = (function() {
 	}
 
 	function primesContainsFactorOf(n, max) {
-		max = max || Math.ceil(Math.sqrt(n));
+		max = max || MathCeil(MathSqrt(n));
 		for (var i = 0, l = primes.length; i < l; ++i) {
 			var prime = primes[i];
 			if (n % prime == 0) {
@@ -87,11 +89,11 @@ var Primes = (function() {
 		return primes.slice(0, primes.length);
 	}
 
-	function getPrimeFactorsOf(n, includeMultiples) {
+	function getPrimeFactors(n, includePowers) {
 		var factors = [];
 		var remainder = n;
 		var prime;
-		var tryFactor = (includeMultiples) ? tryFactorMultiples : tryFactorUnique;
+		var tryFactor = (includePowers) ? tryFactorPowers : tryFactorUnique;
 
 		function tryFactorUnique(factor) {
 			if (remainder % factor == 0) {
@@ -106,17 +108,17 @@ var Primes = (function() {
 			}
 		}
 
-		function tryFactorMultiples(factor) {
+		function tryFactorPowers(factor) {
 			if (remainder % factor == 0) {
-				var multiple = 1;
-				var multiples = [1];
+				var power = 1;
+				var powers = [1];
 				do {
-					multiple *= factor;
-					multiples.push(multiple);
+					power *= factor;
+					powers.push(power);
 					remainder /= factor;
 				}
 				while (remainder % factor == 0);
-				factors.push(multiples);
+				factors.push(powers);
 			}
 		}
 
@@ -133,7 +135,7 @@ var Primes = (function() {
 				return factors;
 			}
 		}
-		factors.push(includeMultiples ? [1,n] : n);
+		factors.push(includePowers ? [1,n] : n);
 		return factors;
 	}
 
@@ -159,10 +161,17 @@ var Primes = (function() {
 		});
 	}
 
-	function getAllFactorsOf(n, sort) {
-		var primes = getPrimeFactorsOf(n, true);
+	function getAllFactors(n, sort) {
+		var primes = getPrimeFactors(n, true);
 		var factors = getFactorCombinations(primes);
 		return (sort) ? sortArray(factors) : factors;
+	}
+
+	function countFactors(n) {
+		var primes = getPrimeFactors(n, true);
+		return primes.reduce(function(total, current) {
+			return total * current.length;
+		}, 1);
 	}
 
 	init();
@@ -171,7 +180,8 @@ var Primes = (function() {
 		reset: init,
 		isPrime: isPrime,
 		getPrimesTo: getPrimesTo,
-		getPrimeFactorsOf: getPrimeFactorsOf,
-		getAllFactorsOf: getAllFactorsOf
+		getPrimeFactors: getPrimeFactors,
+		getAllFactors: getAllFactors,
+		countFactors: countFactors
 	};
 }());
