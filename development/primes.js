@@ -174,9 +174,18 @@ var Primes = (function() {
 		}, 1);
 	}
 
+	function info() {
+		return {
+			primes: primes.slice(),
+			maxPrime: maxPrime,
+			calculatedTo: calculatedTo
+		}
+	}
+
 	init();
 
 	return {
+		info: info,
 		reset: init,
 		isPrime: isPrime,
 		getPrimesTo: getPrimesTo,
