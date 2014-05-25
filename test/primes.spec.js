@@ -72,6 +72,7 @@
 		deepEqual(Primes.getAllFactors(101, true), [1,101], 'All factors of 101');
 		deepEqual(Primes.getAllFactors(700, true), [1,2,4,5,7,10,14,20,25,28,35,50,70,100,140,175,350,700], 'All factors of 700');
 		deepEqual(Primes.getAllFactors(701, true), [1,701], 'All factors of 701');
+		deepEqual(Primes.getAllFactors(284, true), [1, 2, 4, 71, 142, 284], 'All factors of 284');
 	});
 
 	test('should be able to count all factors of a number', function() {

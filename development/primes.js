@@ -3,6 +3,7 @@ var Primes = (function() {
 	var primes, calculatedTo, maxPrime;
 	var MathSqrt = Math.sqrt;
 	var MathCeil = Math.ceil;
+	var MathFloor = Math.floor;
 
 	function init() {
 		primes = [2, 3];
@@ -128,14 +129,14 @@ var Primes = (function() {
 				return factors;
 			}
 		}
-		var max = n / maxPrime;
+		var max = MathFloor(n / maxPrime);
 		while (prime = calculateNext(max)) {
 			tryFactor(prime);
 			if (remainder == 1) {
 				return factors;
 			}
 		}
-		factors.push(includePowers ? [1,n] : n);
+		factors.push(includePowers ? [1,remainder] : remainder);
 		return factors;
 	}
 
