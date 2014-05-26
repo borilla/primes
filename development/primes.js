@@ -63,19 +63,16 @@ var Primes = (function() {
 	}
 
 	function calculateNext(max) {
-		max = max || Number.MAX_VALUE;
+		max = (max || Number.MAX_VALUE) - 2;
 		var n = calculatedTo;
-		if (n < max) {
-			while (n += 2 <= max) {
-				var rem6 = n % 6;
-				if (rem6 == 1 || rem6 == 5) {
-					if (!primesContainsFactorOf(n)) {
-						primes.push(n);
-						return maxPrime = calculatedTo = n;
-					}
+		while (n <= max) {
+			n += 2;
+			if (n % 3) {
+				if (!primesContainsFactorOf(n)) {
+					primes.push(n);
+					return maxPrime = calculatedTo = n;
 				}
 			}
-			calculatedTo = n - 2;
 		}
 		// return undefined;
 	}
