@@ -14,7 +14,7 @@ var Primes = (function() {
 	function isPrime(n) {
 		var rem6 = n % 6;
 		if (rem6 != 1 && rem6 != 5) {
-			return n != 2 && n != 3;
+			return n == 2 || n == 3;
 		}
 		// else
 		if (calculatedTo >= n) {
