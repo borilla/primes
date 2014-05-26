@@ -191,12 +191,13 @@ var Primes = (function() {
 	init();
 
 	return {
-		info: info,
-		reset: init,
-		isPrime: isPrime,
-		getPrimesTo: getPrimesTo,
-		getPrimeFactors: getPrimeFactors,
+		calculateNext: calculateNext,
+		countFactors: countFactors,
 		getAllFactors: getAllFactors,
-		countFactors: countFactors
+		getPrimeFactors: getPrimeFactors,
+		getPrimesTo: getPrimesTo,
+		info: info,
+		isPrime: isPrime,
+		reset: init
 	};
 }());
