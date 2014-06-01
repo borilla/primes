@@ -22,7 +22,7 @@
 		equal(Primes.isPrime(1), false, '1 is not a prime number');
 		equal(Primes.isPrime(4), false, '4 is not a prime number');
 		equal(Primes.isPrime(21), false, '21 is not a prime number');
-		equal(Primes.isPrime(100000000), false, '1000 is not a prime number');
+		equal(Primes.isPrime(100000000), false, '100000000 is not a prime number');
 		equal(Primes.isPrime(104730), false, '104730 is not a prime number');
 	});
 

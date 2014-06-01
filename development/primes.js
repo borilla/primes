@@ -12,9 +12,8 @@ var Primes = (function() {
 	}
 
 	function isPrime(n) {
-		var rem6 = n % 6;
-		if (rem6 != 1 && rem6 != 5) {
-			return n == 2 || n == 3;
+		if ((n & 1) == 0) {
+			return n == 2;
 		}
 		// else
 		if (calculatedTo >= n) {
@@ -36,7 +35,7 @@ var Primes = (function() {
 	}
 
 	function primesContains(n) {
-		for (var i = 2, l = primes.length; i < l; ++i) {
+		for (var i = 1, l = primes.length; i < l; ++i) {
 			var prime = primes[i];
 			if (prime == n) {
 				return true;
@@ -50,7 +49,7 @@ var Primes = (function() {
 
 	function primesContainsFactorOf(n, max) {
 		max = max || MathCeil(MathSqrt(n));
-		for (var i = 2, l = primes.length; i < l; ++i) {
+		for (var i = 1, l = primes.length; i < l; ++i) {
 			var prime = primes[i];
 			if (n % prime == 0) {
 				return true;
@@ -67,11 +66,9 @@ var Primes = (function() {
 		var n = calculatedTo;
 		while (n <= max) {
 			n += 2;
-			if (n % 3) {
-				if (!primesContainsFactorOf(n)) {
-					primes.push(n);
-					return maxPrime = calculatedTo = n;
-				}
+			if (!primesContainsFactorOf(n)) {
+				primes.push(n);
+				return maxPrime = calculatedTo = n;
 			}
 		}
 		// return undefined;
@@ -92,7 +89,7 @@ var Primes = (function() {
 			}
 		}
 		// else
-		return primes.slice(0, primes.length);
+		return primes.slice(0);
 	}
 
 	function getPrimeFactors(n, includePowers) {
