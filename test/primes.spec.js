@@ -87,4 +87,27 @@
 		deepEqual(Primes.countFactors(700), [1,2,4,5,7,10,14,20,25,28,35,50,70,100,140,175,350,700].length, 'Count factors of 700');
 		deepEqual(Primes.countFactors(701), [1,701].length, 'Count factors of 701');
 	});
+
+	test('should be able to find index of item within an ordered array', function() {
+		var array1 = [10, 20, 30, 40];
+		equal(Primes.binaryIndexOf(array1, -10), -1, 'find -10');
+		equal(Primes.binaryIndexOf(array1, 0), -1, 'find 0');
+		equal(Primes.binaryIndexOf(array1, 10), 0, 'find 10');
+		equal(Primes.binaryIndexOf(array1, 20), 1, 'find 20');
+		equal(Primes.binaryIndexOf(array1, 25), -1, 'find 25');
+		equal(Primes.binaryIndexOf(array1, 30), 2, 'find 30');
+		equal(Primes.binaryIndexOf(array1, 40), 3, 'find 40');
+		equal(Primes.binaryIndexOf(array1, 50), -1, 'find 50');
+
+		var array2 = [10, 20, 30, 40, 50];
+		equal(Primes.binaryIndexOf(array2, -10), -1, 'find -10');
+		equal(Primes.binaryIndexOf(array2, 0), -1, 'find 0');
+		equal(Primes.binaryIndexOf(array2, 10), 0, 'find 10');
+		equal(Primes.binaryIndexOf(array2, 20), 1, 'find 20');
+		equal(Primes.binaryIndexOf(array2, 25), -1, 'find 25');
+		equal(Primes.binaryIndexOf(array2, 30), 2, 'find 30');
+		equal(Primes.binaryIndexOf(array2, 40), 3, 'find 40');
+		equal(Primes.binaryIndexOf(array2, 50), 4, 'find 50');
+		equal(Primes.binaryIndexOf(array2, 60), -1, 'find 60');
+	});
 }());

@@ -35,16 +35,7 @@ var Primes = (function() {
 	}
 
 	function primesContains(n) {
-		for (var i = 1, l = primes.length; i < l; ++i) {
-			var prime = primes[i];
-			if (prime == n) {
-				return true;
-			}
-			if (prime > n) {
-				break;
-			}
-		}
-		return false;
+		return binaryIndexOf(primes, n) != -1;
 	}
 
 	function primesContainsFactorOf(n, max) {
@@ -177,6 +168,25 @@ var Primes = (function() {
 		}, 1);
 	}
 
+	function binaryIndexOf(array, search) {
+		var iMin = 0;
+		var iMax = array.length - 1;
+		while (iMax >= iMin) {
+			var i = (iMin + iMax) >> 1;
+			var value = array[i];
+			if (search > value) {
+				iMin = i + 1;
+			}
+			else if (search < value) {
+				iMax = i - 1;
+			}
+			else {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	function info() {
 		return {
 			primes: primes.slice(),
@@ -188,6 +198,7 @@ var Primes = (function() {
 	init();
 
 	return {
+		binaryIndexOf: binaryIndexOf,
 		calculateNext: calculateNext,
 		countFactors: countFactors,
 		getAllFactors: getAllFactors,
