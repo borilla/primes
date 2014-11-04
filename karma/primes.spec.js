@@ -69,16 +69,16 @@ describe('Primes', function() {
 	});
 
 	it('should be able to return all factors of a number', function() {
-		assert.deepEqual(Primes.getAllFactors(1, true), [1], 'All factors of 1');
-		assert.deepEqual(Primes.getAllFactors(2, true), [1,2], 'All factors of 2');
-		assert.deepEqual(Primes.getAllFactors(3, true), [1,3], 'All factors of 3');
-		assert.deepEqual(Primes.getAllFactors(6, true), [1,2,3,6], 'All factors of 6');
-		assert.deepEqual(Primes.getAllFactors(12, true), [1,2,3,4,6,12], 'All factors of 12');
-		assert.deepEqual(Primes.getAllFactors(15, true), [1,3,5,15], 'All factors of 15');
-		assert.deepEqual(Primes.getAllFactors(24, true), [1,2,3,4,6,8,12,24], 'All factors of 24');
-		assert.deepEqual(Primes.getAllFactors(101, true), [1,101], 'All factors of 101');
-		assert.deepEqual(Primes.getAllFactors(700, true), [1,2,4,5,7,10,14,20,25,28,35,50,70,100,140,175,350,700], 'All factors of 700');
-		assert.deepEqual(Primes.getAllFactors(701, true), [1,701], 'All factors of 701');
+		assert.deepEqual(Primes.getAllFactors(1), [1], 'All factors of 1');
+		assert.deepEqual(Primes.getAllFactors(2), [1,2], 'All factors of 2');
+		assert.deepEqual(Primes.getAllFactors(3), [1,3], 'All factors of 3');
+		assert.deepEqual(Primes.getAllFactors(6), [1,2,3,6], 'All factors of 6');
+		assert.deepEqual(Primes.getAllFactors(12), [1,2,3,4,6,12], 'All factors of 12');
+		assert.deepEqual(Primes.getAllFactors(15), [1,3,5,15], 'All factors of 15');
+		assert.deepEqual(Primes.getAllFactors(24), [1,2,3,4,6,8,12,24], 'All factors of 24');
+		assert.deepEqual(Primes.getAllFactors(101), [1,101], 'All factors of 101');
+		assert.deepEqual(Primes.getAllFactors(700), [1,2,4,5,7,10,14,20,25,28,35,50,70,100,140,175,350,700], 'All factors of 700');
+		assert.deepEqual(Primes.getAllFactors(701), [1,701], 'All factors of 701');
 	});
 
 	it('should be able to count all factors of a number', function() {

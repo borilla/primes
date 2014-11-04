@@ -149,16 +149,9 @@ var Primes = (function() {
 		return factors;
 	}
 
-	function sortArray(arr) {
-		return arr.sort(function(a, b) {
-			return (a < b) ? -1 : (a == b) ? 0 : 1;
-		});
-	}
-
-	function getAllFactors(n, sort) {
+	function getAllFactors(n) {
 		var primes = getPrimeFactors(n, true);
 		var factors = getFactorCombinations(primes);
-		return (sort) ? sortArray(factors) : factors;
 	}
 
 	function countFactors(n) {
