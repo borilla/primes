@@ -151,7 +151,7 @@ var Primes = (function() {
 
 	function getAllFactors(n) {
 		var primes = getPrimeFactors(n, true);
-		var factors = getFactorCombinations(primes);
+		return getFactorCombinations(primes);
 	}
 
 	function countFactors(n) {
